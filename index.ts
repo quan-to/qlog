@@ -23,15 +23,15 @@ class Qlog {
     }
 
     public info(message){
-        this.log('INFO',message)
+        this.log('I', message)
     }
 
     public debug(message){
-        this.log('DEBUG',message)
+        this.log('D', message)
     }
 
     public warn(message){
-        this.log('WARN',message)
+        this.log('W', message)
     }
     
     public log(category,message) {
