@@ -3,11 +3,15 @@
 import {default as qlog, QLog} from "./index";
 import LogOperation from './LogOperation';
 
-let log = qlog.scope("MAIN").addFields({
+let log = qlog
+  .scope("MAIN")
+  .addFields({
   hue: "br",
   a: 1,
   stack: "trace",
 });
+
+log.info('a', 'b', 'c');
 
 log.info("Estou no main");
 escopo2(log, "doing huebr");

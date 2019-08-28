@@ -57,8 +57,7 @@ class QLogInstance {
 
   // region Interface QLog Methods
   public addFields(fields: object) {
-    this.fields = {...this.fields, ...fields};
-    return this;
+    return this.clone().setFields({...this.fields, ...fields});
   }
 
   public subScope(scopeName: string) {
@@ -107,6 +106,11 @@ class QLogInstance {
   private clone(): QLogInstance {
     const fields = JSON.parse(JSON.stringify(this.fields)) as object; // Deep Clone
     return (new QLogInstance([...this.scopeStack], fields)).setTag(this._tag);
+  }
+
+  private setFields(fields: object) {
+    this.fields = fields;
+    return this;
   }
 
   private setTag(tag: string): QLogInstance {
