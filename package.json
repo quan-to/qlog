@@ -10,6 +10,7 @@
     "run-example": "node dist/test.js",
     "test": "ava"
   },
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quan-to/Qlog.git"
