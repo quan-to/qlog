@@ -3,26 +3,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // package main
 // import "github.com/quan-to/slog"
 var index_1 = require("./index");
-var qlog = new index_1.Qlog(['MAIN'], {
-    hue: 'br',
+var LogOperation_1 = require("./LogOperation");
+var log = index_1.default
+    .scope("MAIN")
+    .addFields({
+    hue: "br",
     a: 1,
-    stack: 'trace'
+    stack: "trace",
 });
-qlog.info('INFO MESSAGE');
-escopo2(qlog, 'INFO MESSAGE');
-escopo3(qlog, 'doing huebr');
-qlog.debug('DEBUG MESSAGE');
-function escopo2(qlog, argumento0) {
-    qlog = qlog.subScope('Escopo2').addFields({
-        argumento0: argumento0
+log.info('a', 'b', 'c');
+log.info("Estou no main");
+escopo2(log, "doing huebr");
+escopo3(log, "doing huebr");
+log.debug("HUEBR");
+function escopo2(log, argumento0) {
+    log = log
+        .tag('REQUEST1234')
+        .subScope("Escopo2")
+        .addFields({
+        "argumento0": argumento0,
     });
-    qlog.info('INFO MESSAGE');
-    escopo3(qlog, 'do escopo 2');
+    log.info("OLOQUINHO MEU");
+    log.operation(LogOperation_1.default.AWAIT).info("Indo para escopo 3");
+    escopo3(log, "do escopo 2");
+    log.operation(LogOperation_1.default.DONE).info("Escopo 3 chamado");
 }
-function escopo3(qlog, argumento2) {
-    qlog = qlog.subScope('Escopo3').addFields({
-        argumento2: argumento2
+function escopo3(log, argumento2) {
+    log = index_1.default.subScope("Escopo3").addFields({
+        "argumento2": argumento2,
     });
-    qlog.warn('WARNING MESSAGE');
-    qlog.error('ERROR MESSAGE');
+    log.warn("OLOQUINHO MEU DO ESCOPO 3\nHUEBR\nBRBRBRBR");
+    log.error('ERROR MESSAGE');
 }

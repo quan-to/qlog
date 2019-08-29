@@ -20,43 +20,113 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* Qlog 2.0 created by Nemo at 18:15 */
 var utils_1 = require("./utils/");
-function setup() {
-    // TODO get env variables
-}
-var Qlog = /** @class */ (function () {
-    function Qlog(scopeStack, fields) {
-        this.scopeStack = scopeStack;
-        this.fields = fields;
+var LogOperation_1 = require("./LogOperation");
+var LogLevel_1 = require("./LogLevel");
+function addPadding(text, length) {
+    var pad = '';
+    for (var i = 0; i < length; i++) {
+        pad += ' ';
     }
-    Qlog.prototype.addFields = function (fields) {
-        this.fields = __assign(__assign({}, this.fields), fields);
-        return this;
+    return "" + pad + text;
+}
+function addPadForLines(text, length) {
+    return text
+        .split('\n')
+        .map(function (line, idx) { return idx > 0 ? addPadding(line, length) : line; }) // Skip first line
+        .join('\n');
+}
+var pipeChar = utils_1.boldify(utils_1.whitefy('|'));
+var QLogInstance = /** @class */ (function () {
+    function QLogInstance(scopeStack, fields) {
+        this.scopeStack = (typeof scopeStack === 'string') ? [scopeStack] : scopeStack;
+        this.fields = fields || {};
+        this._tag = 'NONE';
+        this.op = LogOperation_1.default.MSG;
+    }
+    // region Interface QLog Methods
+    QLogInstance.prototype.addFields = function (fields) {
+        return this.clone().setFields(__assign(__assign({}, this.fields), fields));
     };
-    Qlog.prototype.subScope = function (scopeName) {
-        return new Qlog(__spreadArrays(this.scopeStack, [scopeName]), this.fields);
+    QLogInstance.prototype.subScope = function (scopeName) {
+        return this.clone().pushScope(scopeName);
     };
-    Qlog.prototype.info = function (message) {
-        this.log('I', message);
+    QLogInstance.prototype.scope = function (scopeName) {
+        return this.clone().setScope(scopeName);
     };
-    Qlog.prototype.error = function (message) {
-        this.log('E', message);
+    QLogInstance.prototype.tag = function (tag) {
+        return this.clone().setTag(tag);
     };
-    Qlog.prototype.debug = function (message) {
-        this.log('D', message);
+    QLogInstance.prototype.operation = function (op) {
+        return this.clone().setOperation(op);
     };
-    Qlog.prototype.warn = function (message) {
-        this.log('W', message);
+    QLogInstance.prototype.info = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        this.log.apply(this, __spreadArrays([LogLevel_1.default.INFO], args));
     };
-    Qlog.prototype.log = function (category, message) {
+    QLogInstance.prototype.debug = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        this.log.apply(this, __spreadArrays([LogLevel_1.default.DEBUG], args));
+    };
+    QLogInstance.prototype.warn = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        this.log.apply(this, __spreadArrays([LogLevel_1.default.WARN], args));
+    };
+    QLogInstance.prototype.error = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        this.log.apply(this, __spreadArrays([LogLevel_1.default.ERROR], args));
+    };
+    QLogInstance.prototype.log = function (category) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
         var _a = this, scopeStack = _a.scopeStack, fields = _a.fields;
         var logDate = new Date().toISOString();
         var colorScheme = utils_1.getColorScheme(category);
-        var scope = scopeStack + " >";
+        var scope = scopeStack.join(' > ');
         var stringifiedFields = JSON.stringify(fields);
-        var content = "[[" + logDate + "] | " + category + " | " + scope + " | " + message + " | " + stringifiedFields + "]";
-        // [timestamp,scopeStack,message,fields]
-        console.log(utils_1.colorizeLog(content, colorScheme));
+        var logHead = logDate + " " + pipeChar + " " + category + " " + pipeChar + " " + this.op + " " + pipeChar + " " + this._tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
+        var logTail = " " + pipeChar + " " + stringifiedFields;
+        var argsStr = args.map(function (a) { return addPadForLines(a, utils_1.stripColors(logHead).length); }).join(' ');
+        console.log(utils_1.colorizeLog("" + logHead + argsStr + logTail, colorScheme));
     };
-    return Qlog;
+    // endregion
+    QLogInstance.prototype.clone = function () {
+        var fields = JSON.parse(JSON.stringify(this.fields)); // Deep Clone
+        return (new QLogInstance(__spreadArrays(this.scopeStack), fields)).setTag(this._tag);
+    };
+    QLogInstance.prototype.setFields = function (fields) {
+        this.fields = fields;
+        return this;
+    };
+    QLogInstance.prototype.setTag = function (tag) {
+        this._tag = tag;
+        return this;
+    };
+    QLogInstance.prototype.setOperation = function (op) {
+        this.op = op;
+        return this;
+    };
+    QLogInstance.prototype.setScope = function (scope) {
+        this.scopeStack = [scope]; // Set Scope resets entire stack
+        return this;
+    };
+    QLogInstance.prototype.pushScope = function (scope) {
+        this.scopeStack.push(scope);
+        return this;
+    };
+    return QLogInstance;
 }());
-exports.Qlog = Qlog;
+exports.default = new QLogInstance('Global');

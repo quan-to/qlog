@@ -1,34 +1,35 @@
 {
-	"name": "qlog",
-	"version": "1.0.0",
-	"description": "quanto logging tool",
-	"main": "dist/index.ts",
-	"types": "dist/index.d.ts",
-	"scripts": {
-		"run-example": "node dist/test.js",
-		"build": "tsc",
-		"test": "ava"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/quan-to/Qlog.git"
-	},
-	"keywords": [
-		"log",
-		"slog",
-		"minimalism",
-		"logger",
-		"native"
-	],
-	"author": "quan-to engineering",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/quan-to/Qlog/issues"
-	},
-	"homepage": "https://github.com/quan-to/Qlog#readme",
-	"dependencies": {
-		"chalk": "^2.4.2",
-		"ts-node": "^8.3.0",
-		"typescript": "^3.6.2"
-	}
+  "name": "@contaquanto/qlog",
+  "version": "1.0.0",
+  "description": "quanto logging tool",
+  "main": "dist/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clear && tsc",
+    "clear": "rimraf ./dist/*",
+    "run-example": "node dist/test.js",
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quan-to/Qlog.git"
+  },
+  "keywords": [
+    "log",
+    "slog",
+    "minimalism",
+    "logger",
+    "native"
+  ],
+  "author": "quan-to engineering",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quan-to/Qlog/issues"
+  },
+  "homepage": "https://github.com/quan-to/Qlog#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  }
 }

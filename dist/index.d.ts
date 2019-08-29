@@ -1,13 +1,16 @@
-declare class Qlog {
-    scopeStack: Array<string>;
-    fields: object;
-    constructor(scopeStack: Array<string>, fields: object);
-    addFields(fields: object): this;
-    subScope(scopeName: string): Qlog;
-    info(message: String): void;
-    error(message: String): void;
-    debug(message: String): void;
-    warn(message: String): void;
-    log(category: string, message: String): void;
+import LogOperation from "./LogOperation";
+import LogLevel from "./LogLevel";
+export interface QLog {
+    addFields(fields: object): QLog;
+    scope(scopeName: string): QLog;
+    subScope(scopeName: string): QLog;
+    tag(tag: string): QLog;
+    operation(tag: LogOperation): QLog;
+    info(...args: string[]): any;
+    warn(...args: string[]): any;
+    debug(...args: string[]): any;
+    error(...args: string[]): any;
+    log(category: LogLevel, ...args: string[]): any;
 }
-export { Qlog };
+declare const _default: QLog;
+export default _default;
