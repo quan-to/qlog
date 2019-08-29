@@ -1,6 +1,6 @@
 {
   "name": "@contaquanto/qlog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "quanto logging tool",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",
