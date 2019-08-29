@@ -41,10 +41,10 @@ To be added
 ## Usage
 
 ```js
-import { QLog } from 'qlog';
+import { default as qlog } from 'qlog';
 
 // Main scopte with fields
-let qlog = new Qlog(['MAIN'], {
+let log = qlog.scope('MAIN').addFields({
 	hue: 'br',
 	a: 1,
 	stack: 'trace'
