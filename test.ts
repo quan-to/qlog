@@ -18,13 +18,15 @@ escopo2(log, "doing huebr");
 escopo3(log, "doing huebr");
 log.debug("HUEBR");
 
-
 function escopo2(log: QLog, argumento0: string) {
   log = log
     .tag('REQUEST1234')
     .subScope("Escopo2")
     .addFields({
       "argumento0": argumento0,
+      "abc": {
+        "t": 1234,
+      },
     });
 
   log.info("OLOQUINHO MEU");

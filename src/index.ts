@@ -1,28 +1,50 @@
 /* Qlog 2.0 created by Nemo at 18:15 */
-import {getColorScheme, colorizeLog, boldify, whitefy, stripColors} from './utils/';
+import {getColorScheme, colorizeLog, boldify, whitefy, stripColors, grayfy} from './utils/';
 
-import LogOperation from "./LogOperation";
+import LogOperation, {MaxOperationStringLength} from "./LogOperation";
 import LogLevel from "./LogLevel";
 
 export interface QLog {
+  /*! Create a new instance of QLog with the specified fields plus the parent fields */
   addFields(fields: object): QLog;
 
+  /*! Creates a new instance of QLog with the specified scope */
   scope(scopeName: string): QLog;
 
+  /*! Creates a new instance of QLog with specified scope appended to the parent scope */
   subScope(scopeName: string): QLog;
 
+  /*! Creates a new instance of QLog with the specified tag */
   tag(tag: string): QLog;
 
+  /*! Creates a new instance of QLog with specified operation */
   operation(tag: LogOperation): QLog;
 
+  /*! Same as log(LogLevel.INFO, ...args) */
   info(...args: string[]);
 
+  /*! Same as log(LogLevel.WARN, ...args) */
   warn(...args: string[]);
 
+  /*! Same as log(LogLevel.DEBUG, ...args) */
   debug(...args: string[]);
 
+  /*! Same as log(LogLevel.ERROR, ...args) */
   error(...args: string[]);
 
+  /*! Same as setOperation(LogOperation.NOTE).info */
+  note(...args: string[]);
+
+  /*! Same as setOperation(LogOperation.AWAIT).info */
+  await(...args: string[]);
+
+  /*! Same as setOperation(LogOperation.DONE).info */
+  done(...args: string[]);
+
+  /*! Same as setOperation(LogOperation.DONE).info */
+  success(...args: string[]);
+
+  /*! Prints a log line with the specified level and arguments */
   log(category: LogLevel, ...args: string[]);
 }
 
@@ -33,6 +55,15 @@ function addPadding(text: string, length: number): string {
   }
 
   return `${pad}${text}`;
+}
+
+function padRight(text: string, length: number): string {
+  let padded = text;
+  for (let i = padded.length; i < length; i++) {
+    padded += ' ';
+  }
+
+  return padded;
 }
 
 function addPadForLines(text: string, length: number): string {
@@ -80,30 +111,46 @@ class QLogInstance {
   }
 
   public info(...args: string[]) {
-    this.log(LogLevel.INFO, ...args)
+    this.log(LogLevel.INFO, ...args);
   }
 
   public debug(...args: string[]) {
-    this.log(LogLevel.DEBUG, ...args)
+    this.log(LogLevel.DEBUG, ...args);
   }
 
   public warn(...args: string[]) {
-    this.log(LogLevel.WARN, ...args)
+    this.log(LogLevel.WARN, ...args);
   }
 
   public error(...args: string[]) {
-    this.log(LogLevel.ERROR, ...args)
+    this.log(LogLevel.ERROR, ...args);
+  }
+
+  public note(...args: string[]) {
+    this.setOperation(LogOperation.NOTE).log(LogLevel.INFO, ...args);
+  }
+
+  public await(...args: string[]) {
+    this.setOperation(LogOperation.AWAIT).log(LogLevel.INFO, ...args);
+  }
+
+  public done(...args: string[]) {
+    this.setOperation(LogOperation.DONE).log(LogLevel.INFO, ...args);
+  }
+
+  public success(...args: string[]) {
+    this.setOperation(LogOperation.DONE).log(LogLevel.INFO, ...args);
   }
 
   public log(category: LogLevel, ...args: string[]) {
     const {scopeStack, fields} = this;
 
-    const logDate = new Date().toISOString();
+    const logDate = grayfy(new Date().toISOString());
     const colorScheme = getColorScheme(category);
-    const scope = scopeStack.join(' > ');
+    const scope = padRight(scopeStack.join(' > '), 18);
     const stringifiedFields = JSON.stringify(fields);
 
-    const logHead = `${logDate} ${pipeChar} ${category} ${pipeChar} ${this.op} ${pipeChar} ${this._tag} ${pipeChar} ${scope} ${pipeChar} `;
+    const logHead = `${logDate} ${pipeChar} ${boldify(category)} ${pipeChar} ${boldify(padRight(this.op, MaxOperationStringLength))} ${pipeChar} ${this._tag} ${pipeChar} ${scope} ${pipeChar} `;
     const logTail = ` ${pipeChar} ${stringifiedFields}`;
 
     const argsStr = args.map((a) => addPadForLines(a, stripColors(logHead).length)).join(' ');

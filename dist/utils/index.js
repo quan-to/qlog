@@ -12,6 +12,7 @@ exports.getColorScheme = function (category) {
 };
 exports.boldify = function (content) { return chalk_1.default.bold(content); };
 exports.whitefy = function (content) { return chalk_1.default.whiteBright(content); };
+exports.grayfy = function (content) { return chalk_1.default.gray(content); };
 exports.stripColors = function (str) { return str.replace(/\x1B\[\d+m/g, ''); };
 exports.colorizeLog = function (content, colorScheme) {
     return chalk_1.default[colorScheme](content);

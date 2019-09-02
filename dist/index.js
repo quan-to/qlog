@@ -31,6 +31,13 @@ function addPadding(text, length) {
     }
     return "" + pad + text;
 }
+function padRight(text, length) {
+    var padded = text;
+    for (var i = padded.length; i < length; i++) {
+        padded += ' ';
+    }
+    return padded;
+}
 function addPadForLines(text, length) {
     return text
         .split('\n')
@@ -89,17 +96,49 @@ var QLogInstance = /** @class */ (function () {
         }
         this.log.apply(this, __spreadArrays([LogLevel_1.default.ERROR], args));
     };
+    QLogInstance.prototype.note = function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        (_a = this.setOperation(LogOperation_1.default.NOTE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+    };
+    QLogInstance.prototype.await = function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        (_a = this.setOperation(LogOperation_1.default.AWAIT)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+    };
+    QLogInstance.prototype.done = function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        (_a = this.setOperation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+    };
+    QLogInstance.prototype.success = function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        (_a = this.setOperation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+    };
     QLogInstance.prototype.log = function (category) {
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
         var _a = this, scopeStack = _a.scopeStack, fields = _a.fields;
-        var logDate = new Date().toISOString();
+        var logDate = utils_1.grayfy(new Date().toISOString());
         var colorScheme = utils_1.getColorScheme(category);
-        var scope = scopeStack.join(' > ');
+        var scope = padRight(scopeStack.join(' > '), 18);
         var stringifiedFields = JSON.stringify(fields);
-        var logHead = logDate + " " + pipeChar + " " + category + " " + pipeChar + " " + this.op + " " + pipeChar + " " + this._tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
+        var logHead = logDate + " " + pipeChar + " " + utils_1.boldify(category) + " " + pipeChar + " " + utils_1.boldify(padRight(this.op, LogOperation_1.MaxOperationStringLength)) + " " + pipeChar + " " + this._tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
         var logTail = " " + pipeChar + " " + stringifiedFields;
         var argsStr = args.map(function (a) { return addPadForLines(a, utils_1.stripColors(logHead).length); }).join(' ');
         console.log(utils_1.colorizeLog("" + logHead + argsStr + logTail, colorScheme));
