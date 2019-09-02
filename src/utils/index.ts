@@ -1,17 +1,8 @@
 import chalk from 'chalk';
 
-import LogLevel from "../LogLevel";
+import LogLevel, {LevelColors} from "../LogLevel";
 
-export const getColorScheme = (category: LogLevel) => {
-  const colors = {};
-
-  colors[LogLevel.INFO] = 'green';
-  colors[LogLevel.DEBUG] = 'magenta';
-  colors[LogLevel.WARN] = 'yellow';
-  colors[LogLevel.ERROR] = 'red';
-
-  return colors[category];
-};
+export const getColorScheme = (category: LogLevel) => LevelColors[category];
 
 export const boldify = (content: string) => chalk.bold(content);
 

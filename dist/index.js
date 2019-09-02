@@ -96,6 +96,14 @@ var QLogInstance = /** @class */ (function () {
         }
         this.log.apply(this, __spreadArrays([LogLevel_1.default.ERROR], args));
     };
+    QLogInstance.prototype.io = function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        (_a = this.setOperation(LogOperation_1.default.IO)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+    };
     QLogInstance.prototype.note = function () {
         var _a;
         var args = [];
@@ -138,7 +146,9 @@ var QLogInstance = /** @class */ (function () {
         var colorScheme = utils_1.getColorScheme(category);
         var scope = padRight(scopeStack.join(' > '), 24);
         var stringifiedFields = JSON.stringify(fields);
-        var logHead = logDate + " " + pipeChar + " " + utils_1.boldify(category) + " " + pipeChar + " " + utils_1.boldify(padRight(this.op, LogOperation_1.MaxOperationStringLength)) + " " + pipeChar + " " + this._tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
+        var op = utils_1.colorizeLog(utils_1.whitefy(padRight(this.op, LogOperation_1.MaxOperationStringLength)), LogOperation_1.OperationColors[this.op]);
+        var tag = utils_1.grayfy(this._tag);
+        var logHead = logDate + " " + pipeChar + " " + utils_1.boldify(category) + " " + pipeChar + " " + op + " " + pipeChar + " " + tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
         var logTail = " " + pipeChar + " " + stringifiedFields;
         var argsStr = args.map(function (a) { return addPadForLines(a, utils_1.stripColors(logHead).length); }).join(' ');
         console.log(utils_1.colorizeLog("" + logHead + argsStr + logTail, colorScheme));

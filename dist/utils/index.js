@@ -2,14 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var chalk_1 = require("chalk");
 var LogLevel_1 = require("../LogLevel");
-exports.getColorScheme = function (category) {
-    var colors = {};
-    colors[LogLevel_1.default.INFO] = 'green';
-    colors[LogLevel_1.default.DEBUG] = 'magenta';
-    colors[LogLevel_1.default.WARN] = 'yellow';
-    colors[LogLevel_1.default.ERROR] = 'red';
-    return colors[category];
-};
+exports.getColorScheme = function (category) { return LogLevel_1.LevelColors[category]; };
 exports.boldify = function (content) { return chalk_1.default.bold(content); };
 exports.whitefy = function (content) { return chalk_1.default.whiteBright(content); };
 exports.grayfy = function (content) { return chalk_1.default.gray(content); };

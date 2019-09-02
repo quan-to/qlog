@@ -1,7 +1,7 @@
 /* Qlog 2.0 created by Nemo at 18:15 */
 import {getColorScheme, colorizeLog, boldify, whitefy, stripColors, grayfy} from './utils/';
 
-import LogOperation, {MaxOperationStringLength} from "./LogOperation";
+import LogOperation, {MaxOperationStringLength, OperationColors} from "./LogOperation";
 import LogLevel from "./LogLevel";
 
 export interface QLog {
@@ -43,6 +43,9 @@ export interface QLog {
 
   /*! Same as setOperation(LogOperation.DONE).info */
   success(...args: string[]);
+
+  /*! Same as setOperation(LogOperation.IO).info */
+  io(...args: string[]);
 
   /*! Prints a log line with the specified level and arguments */
   log(category: LogLevel, ...args: string[]);
@@ -126,6 +129,10 @@ class QLogInstance {
     this.log(LogLevel.ERROR, ...args);
   }
 
+  public io(...args: string[]) {
+    this.setOperation(LogOperation.IO).log(LogLevel.INFO, ...args);
+  }
+
   public note(...args: string[]) {
     this.setOperation(LogOperation.NOTE).log(LogLevel.INFO, ...args);
   }
@@ -149,8 +156,10 @@ class QLogInstance {
     const colorScheme = getColorScheme(category);
     const scope = padRight(scopeStack.join(' > '), 24);
     const stringifiedFields = JSON.stringify(fields);
+    const op = colorizeLog(whitefy(padRight(this.op, MaxOperationStringLength)), OperationColors[this.op]);
+    const tag = grayfy(this._tag);
 
-    const logHead = `${logDate} ${pipeChar} ${boldify(category)} ${pipeChar} ${boldify(padRight(this.op, MaxOperationStringLength))} ${pipeChar} ${this._tag} ${pipeChar} ${scope} ${pipeChar} `;
+    const logHead = `${logDate} ${pipeChar} ${boldify(category)} ${pipeChar} ${op} ${pipeChar} ${tag} ${pipeChar} ${scope} ${pipeChar} `;
     const logTail = ` ${pipeChar} ${stringifiedFields}`;
 
     const argsStr = args.map((a) => addPadForLines(a, stripColors(logHead).length)).join(' ');

@@ -4,4 +4,6 @@ declare enum LogLevel {
     ERROR = "E",
     DEBUG = "D"
 }
+declare const LevelColors: {};
 export default LogLevel;
+export { LogLevel, LevelColors, };

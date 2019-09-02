@@ -27,6 +27,8 @@ export interface QLog {
     done(...args: string[]): any;
     /*! Same as setOperation(LogOperation.DONE).info */
     success(...args: string[]): any;
+    /*! Same as setOperation(LogOperation.IO).info */
+    io(...args: string[]): any;
     /*! Prints a log line with the specified level and arguments */
     log(category: LogLevel, ...args: string[]): any;
 }

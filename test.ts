@@ -18,6 +18,12 @@ escopo2(log, "doing huebr");
 escopo3(log, "doing huebr");
 log.debug("HUEBR");
 
+log.io('ABCDE DISK');
+log.io('ABCDE DISK1');
+log.io('ABCDE DISK2');
+log.io('ABCDE DISK3');
+log.io('ABCDE DISK4');
+
 function escopo2(log: QLog, argumento0: string) {
   log = log
     .tag('REQUEST1234')
@@ -31,9 +37,9 @@ function escopo2(log: QLog, argumento0: string) {
 
   log.info("OLOQUINHO MEU");
 
-  log.operation(LogOperation.AWAIT).info("Indo para escopo 3");
+  log.await("Indo para escopo 3");
   escopo3(log, "do escopo 2");
-  log.operation(LogOperation.DONE).info("Escopo 3 chamado");
+  log.done("Escopo 3 chamado");
 }
 
 function escopo3(log: QLog, argumento2: string) {
