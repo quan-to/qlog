@@ -136,7 +136,7 @@ var QLogInstance = /** @class */ (function () {
         var _a = this, scopeStack = _a.scopeStack, fields = _a.fields;
         var logDate = utils_1.grayfy(new Date().toISOString());
         var colorScheme = utils_1.getColorScheme(category);
-        var scope = padRight(scopeStack.join(' > '), 18);
+        var scope = padRight(scopeStack.join(' > '), 24);
         var stringifiedFields = JSON.stringify(fields);
         var logHead = logDate + " " + pipeChar + " " + utils_1.boldify(category) + " " + pipeChar + " " + utils_1.boldify(padRight(this.op, LogOperation_1.MaxOperationStringLength)) + " " + pipeChar + " " + this._tag + " " + pipeChar + " " + scope + " " + pipeChar + " ";
         var logTail = " " + pipeChar + " " + stringifiedFields;

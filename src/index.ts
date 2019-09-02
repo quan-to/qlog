@@ -147,7 +147,7 @@ class QLogInstance {
 
     const logDate = grayfy(new Date().toISOString());
     const colorScheme = getColorScheme(category);
-    const scope = padRight(scopeStack.join(' > '), 18);
+    const scope = padRight(scopeStack.join(' > '), 24);
     const stringifiedFields = JSON.stringify(fields);
 
     const logHead = `${logDate} ${pipeChar} ${boldify(category)} ${pipeChar} ${boldify(padRight(this.op, MaxOperationStringLength))} ${pipeChar} ${this._tag} ${pipeChar} ${scope} ${pipeChar} `;
