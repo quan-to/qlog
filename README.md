@@ -41,19 +41,19 @@ To be added
 ## Usage
 
 ```js
-import { default as qlog } from 'qlog';
+import qlog from '@contaquanto/qlog';
 
-// Main scopte with fields
+// Main scope with fields
 let log = qlog.scope('MAIN').addFields({
 	hue: 'br',
 	a: 1,
 	stack: 'trace'
 });
 
-qlog.info('INFO MESSAGE');
-qlog.debug('DEBUG MESSAGE');
-qlog.warn('WARNING MESSAGE');
-qlog.error('ERROR MESSAGE');
+log.info('INFO MESSAGE');
+log.debug('DEBUG MESSAGE');
+log.warn('WARNING MESSAGE');
+log.error('ERROR MESSAGE');
 ```
 
 ## What you need to know
