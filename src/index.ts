@@ -145,3 +145,7 @@ class QLogInstance {
 }
 
 export default new QLogInstance('Global') as QLog;
+export {
+  LogLevel,
+  LogOperation,
+}

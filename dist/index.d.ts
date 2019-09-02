@@ -14,3 +14,4 @@ export interface QLog {
 }
 declare const _default: QLog;
 export default _default;
+export { LogLevel, LogOperation, };

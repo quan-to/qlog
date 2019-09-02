@@ -21,7 +21,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* Qlog 2.0 created by Nemo at 18:15 */
 var utils_1 = require("./utils/");
 var LogOperation_1 = require("./LogOperation");
+exports.LogOperation = LogOperation_1.default;
 var LogLevel_1 = require("./LogLevel");
+exports.LogLevel = LogLevel_1.default;
 function addPadding(text, length) {
     var pad = '';
     for (var i = 0; i < length; i++) {
