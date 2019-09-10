@@ -102,7 +102,7 @@ var QLogInstance = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.setOperation(LogOperation_1.default.IO)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+        (_a = this.operation(LogOperation_1.default.IO)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
     };
     QLogInstance.prototype.note = function () {
         var _a;
@@ -110,7 +110,7 @@ var QLogInstance = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.setOperation(LogOperation_1.default.NOTE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+        (_a = this.operation(LogOperation_1.default.NOTE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
     };
     QLogInstance.prototype.await = function () {
         var _a;
@@ -118,7 +118,7 @@ var QLogInstance = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.setOperation(LogOperation_1.default.AWAIT)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+        (_a = this.operation(LogOperation_1.default.AWAIT)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
     };
     QLogInstance.prototype.done = function () {
         var _a;
@@ -126,7 +126,7 @@ var QLogInstance = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.setOperation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+        (_a = this.operation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
     };
     QLogInstance.prototype.success = function () {
         var _a;
@@ -134,7 +134,7 @@ var QLogInstance = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        (_a = this.setOperation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
+        (_a = this.operation(LogOperation_1.default.DONE)).log.apply(_a, __spreadArrays([LogLevel_1.default.INFO], args));
     };
     QLogInstance.prototype.log = function (category) {
         var args = [];

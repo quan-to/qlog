@@ -130,23 +130,23 @@ class QLogInstance {
   }
 
   public io(...args: string[]) {
-    this.setOperation(LogOperation.IO).log(LogLevel.INFO, ...args);
+    this.operation(LogOperation.IO).log(LogLevel.INFO, ...args);
   }
 
   public note(...args: string[]) {
-    this.setOperation(LogOperation.NOTE).log(LogLevel.INFO, ...args);
+    this.operation(LogOperation.NOTE).log(LogLevel.INFO, ...args);
   }
 
   public await(...args: string[]) {
-    this.setOperation(LogOperation.AWAIT).log(LogLevel.INFO, ...args);
+    this.operation(LogOperation.AWAIT).log(LogLevel.INFO, ...args);
   }
 
   public done(...args: string[]) {
-    this.setOperation(LogOperation.DONE).log(LogLevel.INFO, ...args);
+    this.operation(LogOperation.DONE).log(LogLevel.INFO, ...args);
   }
 
   public success(...args: string[]) {
-    this.setOperation(LogOperation.DONE).log(LogLevel.INFO, ...args);
+    this.operation(LogOperation.DONE).log(LogLevel.INFO, ...args);
   }
 
   public log(category: LogLevel, ...args: string[]) {
