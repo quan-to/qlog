@@ -1,4 +1,6 @@
 ## QLog
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fquan-to%2Fqlog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fquan-to%2Fqlog?ref=badge_shield)
+
 
 A smart logging tool, defined to be minimalist and simple.
 
@@ -120,3 +122,7 @@ If a multiline log is displayed, the library will correctly ident all the messag
 *   Instead of `operation(AWAIT).warn` use `warnAwait`
 *   Use `tag` to indentify calls in the same flow (for example on a HTTP Request)
 *   All `LogInstance` calls returns a new `LogInstance` with the modified data. It will never change it's parent data making it completely immutable.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fquan-to%2Fqlog.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fquan-to%2Fqlog?ref=badge_large)
